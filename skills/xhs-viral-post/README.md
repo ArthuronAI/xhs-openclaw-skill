@@ -1,58 +1,121 @@
 ﻿# XiaoHongShu Viral Post Generator
 
-Advanced OpenClaw skill for generating high-performing Xiaohongshu (Little Red Book) posts from a single topic.
+Generate **viral Xiaohongshu posts** using AI.
 
-## New Features
-- Trending keyword discovery:
-  - Pulls related keywords from a public API with simulation fallback.
-- AI content generation:
-  - Uses OpenAI `gpt-4o` to generate viral-style `title` and `content`.
-- Hashtag ranking:
-  - Builds candidate hashtags and ranks them by simulated popularity score.
-- Cover image prompt:
-  - Generates a Midjourney/DALL-E-ready prompt for Xiaohongshu cover visuals.
-- Posting strategy:
-  - Produces best posting time, target audience, and engagement hook.
+This OpenClaw skill helps creators, marketers, and automation builders quickly produce high-engagement Xiaohongshu content.
 
-## Install
-1. Keep this folder at:
-   - `skills/xhs-viral-post`
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Configure environment variables (or your OpenClaw secret/config system):
-   - `OPENAI_API_KEY`
-   - `SKILLPAY_KEY`
+---
 
-## Use in OpenClaw
-1. Trigger with one of:
-   - `小红书笔记`
-   - `发小红书`
-   - `xhs post`
-2. Input:
-   ```json
-   {
-     "topic": "夏日通勤穿搭"
-   }
-   ```
-3. Output:
-   ```json
-   {
-     "title": "...",
-     "content": "...",
-     "hashtags": ["#...", "#...", "#...", "#...", "#..."],
-     "coverPrompt": "...",
-     "strategy": {
-       "bestTime": "20:30",
-       "audience": "22-30 urban female professionals",
-       "hook": "Ask readers to comment their own method at the end."
-     }
-   }
-   ```
+# Features
 
-## Pricing (SkillPay)
+• AI-generated viral titles  
+• Authentic Xiaohongshu-style content  
+• Trending keyword discovery  
+• Smart hashtag ranking  
+• Cover image prompt suggestions  
+• Posting strategy recommendations  
+
+Perfect for:
+
+• Social media marketers  
+• Content creators  
+• AI automation builders  
+• Xiaohongshu growth hacking
+
+---
+
+# Example
+
+Input
+
+```json
+{
+  "topic": "夏日通勤穿搭"
+}
+```
+
+Output
+
+```json
+{
+  "title": "打工人夏日通勤穿搭｜这套真的被同事问爆了",
+  "content": "最近真的被这套通勤穿搭问疯了！夏天通勤最怕闷热，但这套搭配真的又清爽又显气质...",
+  "hashtags": [
+    "#通勤穿搭",
+    "#夏日穿搭",
+    "#打工人日常",
+    "#小红书穿搭",
+    "#每日穿搭"
+  ],
+  "coverPrompt": "clean minimal summer office outfit aesthetic, natural lighting",
+  "strategy": {
+    "bestTime": "20:30",
+    "audience": "22-30 urban female professionals",
+    "hook": "Ask readers to share their own summer commute outfit."
+  }
+}
+```
+
+---
+
+# Use in OpenClaw
+
+Trigger with:
+
+```
+小红书笔记
+发小红书
+xhs post
+```
+
+Input example:
+
+```json
+{
+  "topic": "AI副业赚钱"
+}
+```
+
+---
+
+# Pricing
+
+This skill uses **SkillPay** billing.
+
+Each execution costs:
+
+```
+0.008 USDT
+```
+
 SkillPay pricing id:
-- `66d32381-4e78-4593-9309-63576e85a8b7`
 
-Set `SKILLPAY_KEY` in your OpenClaw environment to enable billing/auth flows.
+```
+66d32381-4e78-4593-9309-63576e85a8b7
+```
+
+---
+
+# Installation
+
+Install via OpenClaw:
+
+```
+openclaw install xhs-viral-post
+```
+
+---
+
+# Use Cases
+
+Content creators  
+Marketing agencies  
+AI automation workflows  
+Social media growth experiments
+
+---
+
+# Author
+
+Arthur Wang  
+GitHub: https://github.com/ArthuronAI
