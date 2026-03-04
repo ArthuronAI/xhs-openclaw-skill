@@ -1,7 +1,7 @@
 ﻿{
   "name": "xhs-viral-post",
-  "version": "1.0.0",
-  "description": "OpenClaw skill to generate viral Xiaohongshu posts with AI",
+  "version": "1.1.0",
+  "description": "Advanced OpenClaw skill for Xiaohongshu viral post generation",
   "main": "run.js",
   "license": "MIT",
   "dependencies": {

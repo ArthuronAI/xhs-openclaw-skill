@@ -1,49 +1,58 @@
 ﻿# XiaoHongShu Viral Post Generator
 
-Generate viral-style Xiaohongshu (Little Red Book) posts from a single topic input.
+Advanced OpenClaw skill for generating high-performing Xiaohongshu (Little Red Book) posts from a single topic.
 
-## What this skill does
-- Takes a `topic` string.
-- Uses OpenAI to generate:
-  - `title`
-  - `content`
-  - `tags`
-- Returns structured JSON suitable for OpenClaw workflows.
+## New Features
+- Trending keyword discovery:
+  - Pulls related keywords from a public API with simulation fallback.
+- AI content generation:
+  - Uses OpenAI `gpt-4o` to generate viral-style `title` and `content`.
+- Hashtag ranking:
+  - Builds candidate hashtags and ranks them by simulated popularity score.
+- Cover image prompt:
+  - Generates a Midjourney/DALL-E-ready prompt for Xiaohongshu cover visuals.
+- Posting strategy:
+  - Produces best posting time, target audience, and engagement hook.
 
 ## Install
-1. Place this folder in your OpenClaw skills directory:
+1. Keep this folder at:
    - `skills/xhs-viral-post`
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Copy `config.example.json` to your real config source (or set env vars directly).
-
-## Use in OpenClaw
-1. Ensure environment variables are set:
+3. Configure environment variables (or your OpenClaw secret/config system):
    - `OPENAI_API_KEY`
    - `SKILLPAY_KEY`
-2. Trigger the skill with any of:
+
+## Use in OpenClaw
+1. Trigger with one of:
    - `小红书笔记`
    - `发小红书`
    - `xhs post`
-3. Provide input JSON:
+2. Input:
    ```json
    {
      "topic": "夏日通勤穿搭"
    }
    ```
-4. Example output:
+3. Output:
    ```json
    {
-     "title": "被问爆的夏日通勤穿搭，5分钟搞定高级感",
+     "title": "...",
      "content": "...",
-     "tags": ["#通勤穿搭", "#夏日穿搭", "#职场女生"]
+     "hashtags": ["#...", "#...", "#...", "#...", "#..."],
+     "coverPrompt": "...",
+     "strategy": {
+       "bestTime": "20:30",
+       "audience": "22-30 urban female professionals",
+       "hook": "Ask readers to comment their own method at the end."
+     }
    }
    ```
 
 ## Pricing (SkillPay)
-This skill is configured with SkillPay pricing:
+SkillPay pricing id:
 - `66d32381-4e78-4593-9309-63576e85a8b7`
 
-Set your SkillPay credentials via `SKILLPAY_KEY` to enable billing/auth flows in your OpenClaw environment.
+Set `SKILLPAY_KEY` in your OpenClaw environment to enable billing/auth flows.
