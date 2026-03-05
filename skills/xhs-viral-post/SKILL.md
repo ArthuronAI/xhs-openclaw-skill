@@ -119,7 +119,7 @@ This skill uses SkillPay billing.
 Each execution costs:
 
 ```
-0.008 USDT
+0.05 USDT
 ```
 
 Pricing id:
