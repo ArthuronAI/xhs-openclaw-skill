@@ -1,42 +1,31 @@
 ﻿const axios = require("axios");
 
-const FALLBACK_KEYWORDS = [
+const FALLBACK = [
   "真实测评",
-  "平替推荐",
-  "懒人教程",
-  "学生党必看",
-  "通勤必备",
-  "省钱技巧",
-  "新手入门",
-  "高颜值"
+  "平替",
+  "不踩雷",
+  "学生党",
+  "上班族",
+  "新手友好",
+  "高性价比",
+  "懒人方法"
 ];
 
-function normalizeKeywords(items) {
-  return Array.from(
-    new Set(
-      items
-        .map((item) => String(item || "").trim())
-        .filter(Boolean)
-        .slice(0, 12)
-    )
-  );
+function uniq(items) {
+  return Array.from(new Set(items.map((x) => String(x || "").trim()).filter(Boolean)));
 }
 
-async function fetchFromPublicApi(topic) {
-  const url = "https://api.datamuse.com/words";
-  const response = await axios.get(url, {
-    params: {
-      ml: topic,
-      max: 12
-    },
+async function fetchDatamuse(topic) {
+  const res = await axios.get("https://api.datamuse.com/words", {
+    params: { ml: topic, max: 12 },
     timeout: 5000
   });
 
-  const words = Array.isArray(response.data)
-    ? response.data.map((item) => item.word)
-    : [];
+  if (!Array.isArray(res.data)) {
+    return [];
+  }
 
-  return normalizeKeywords(words);
+  return uniq(res.data.map((x) => x.word));
 }
 
 module.exports = async function getTrendingKeywords(topic) {
@@ -44,24 +33,16 @@ module.exports = async function getTrendingKeywords(topic) {
 
   try {
     if (cleanTopic) {
-      const apiKeywords = await fetchFromPublicApi(cleanTopic);
-      if (apiKeywords.length >= 5) {
-        return { keywords: apiKeywords };
+      const apiWords = await fetchDatamuse(cleanTopic);
+      if (apiWords.length >= 5) {
+        return { keywords: apiWords };
       }
     }
   } catch (_) {
-    // Fallback to simulated trending keywords when API is unavailable.
+    // Network failures fallback to simulated keywords.
   }
 
-  const simulated = normalizeKeywords([
-    cleanTopic,
-    ...FALLBACK_KEYWORDS,
-    "爆款",
-    "干货",
-    "收藏级"
-  ]);
-
   return {
-    keywords: simulated
+    keywords: uniq([cleanTopic, ...FALLBACK, "爆款", "收藏", "种草清单"]).slice(0, 12)
   };
 };

@@ -1,34 +1,34 @@
 ﻿function hash(text) {
-  let n = 0;
+  let h = 0;
   for (let i = 0; i < text.length; i += 1) {
-    n = (n * 33 + text.charCodeAt(i)) >>> 0;
+    h = (h * 31 + text.charCodeAt(i)) >>> 0;
   }
-  return n;
+  return h;
 }
 
 module.exports = async function buildStrategy(topic, hashtags) {
-  const source = `${topic || ""}|${(hashtags || []).join("|")}`;
-  const value = hash(source);
+  const basis = `${topic || ""}|${(hashtags || []).join("|")}`;
+  const n = hash(basis);
 
-  const bestTimes = ["07:30", "12:20", "18:45", "20:30", "22:00"];
+  const bestTimes = ["07:40", "12:15", "18:30", "20:10", "21:40"];
   const audiences = [
-    "18-24 students and first-job creators",
-    "22-30 urban female professionals",
-    "20-35 lifestyle and beauty seekers",
-    "young parents looking for practical tips",
-    "new creators learning social growth"
+    "18-24 学生党 / 刚毕业人群",
+    "22-30 一二线通勤女生",
+    "20-35 关注性价比与颜值的人群",
+    "新手博主与轻内容创作者",
+    "关注生活方式与效率提升用户"
   ];
   const hooks = [
-    "Open with a relatable pain point in the first sentence.",
-    "Ask readers to comment their own method at the end.",
-    "Share one counter-intuitive tip before the main steps.",
-    "Use a before/after contrast to boost saves.",
-    "Invite readers to bookmark for a checklist version."
+    "开头先说你踩过的坑，拉近真实感。",
+    "正文最后加一句“要不要我出对比版？”提高评论率。",
+    "把最实用一步提前说，提升完读率。",
+    "用“我自己试了7天”的口吻提高可信度。",
+    "结尾引导“先收藏，周末照着做”提高收藏率。"
   ];
 
   return {
-    bestTime: bestTimes[value % bestTimes.length],
-    audience: audiences[value % audiences.length],
-    hook: hooks[value % hooks.length]
+    bestTime: bestTimes[n % bestTimes.length],
+    audience: audiences[n % audiences.length],
+    hook: hooks[n % hooks.length]
   };
 };

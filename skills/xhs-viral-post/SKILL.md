@@ -1,61 +1,72 @@
 ﻿---
-name: XiaoHongShu Viral Post Generator
-description: Generate viral Xiaohongshu posts using AI including titles, content, hashtags, and posting strategy.
-version: 1.0
+name: xhs-viral-post
+description: AI 一键生成小红书爆款笔记（标题、正文、标签、封面提示、发帖策略）。真实种草风，防封号友好。
+version: 1.1.0
 author: ArthuronAI
 triggers:
   - 小红书笔记
-  - 发小红书
   - xhs post
+  - 发小红书
+  - xiaohongshu viral
+user-invocable: true
 pricing:
-  skillpay: 66d32381-4e78-4593-9309-63576e85a8b7
+  skillpay: 66d32381-4e78-4593-9309-63576e85a8b7   # SkillPay ID
+metadata:
+  openclaw:
+    requires:
+      env:
+        - OPENAI_API_KEY     # Required for content generation
+        - SKILLPAY_KEY       # Required for paid billing per call
+    primaryEnv: OPENAI_API_KEY
+    emoji: "🌸"
 ---
 
 # XiaoHongShu Viral Post Generator
 
-This OpenClaw skill generates **high-engagement Xiaohongshu posts** from a topic using AI.
+面向 OpenClaw / ClawHub 的小红书爆款笔记生成 Skill。
 
-It is designed for creators, social media marketers, and AI automation builders who want to quickly produce Xiaohongshu-style content.
+## Requirements
 
----
+必须配置的环境变量：
 
-# What this skill does
+- `OPENAI_API_KEY`
+- `SKILLPAY_KEY`
 
-Given a topic, the skill will:
+用途说明：
 
-- Generate a viral-style Xiaohongshu title
-- Write a natural Xiaohongshu post body
-- Suggest high-performing hashtags
-- Suggest a cover image prompt
-- Provide posting strategy insights
+- `OPENAI_API_KEY`：用于调用 OpenAI API 生成标题与正文。
+- `SKILLPAY_KEY`：用于调用 SkillPay 计费接口，按次扣费。
 
-The generated content follows common Xiaohongshu writing patterns including conversational tone, emojis, and engagement hooks.
+## Security & External APIs
 
----
+本 Skill 的网络行为如下：
 
-# Input
+- 调用 OpenAI API（内容生成）。
+- 调用公开关键词 API（趋势关键词发现）。
+- 调用 SkillPay API（每次执行计费）。
 
-```
+本 Skill 不读取本地文件，不扫描本地目录，不访问除环境变量外的本地敏感信息。
+
+## Pricing
+
+- 价格：`0.05 USDT / 次`
+- SkillPay ID：`66d32381-4e78-4593-9309-63576e85a8b7`
+
+## Input
+
+```json
 {
   "topic": "夏日通勤穿搭"
 }
 ```
 
-Field description:
+## Output
 
-| Field | Type | Description |
-|------|------|-------------|
-| topic | string | The subject or theme of the Xiaohongshu post |
-
----
-
-# Output
-
-```
+```json
 {
   "title": "...",
   "content": "...",
-  "hashtags": ["#...", "#..."],
+  "hashtags": ["#...", "#...", "#...", "#...", "#..."],
   "coverPrompt": "...",
   "strategy": {
     "bestTime": "20:30",
@@ -65,65 +76,11 @@ Field description:
 }
 ```
 
-Field description:
+## Runtime Pipeline
 
-| Field | Description |
-|------|-------------|
-| title | Generated viral title |
-| content | Main Xiaohongshu-style post content |
-| hashtags | Recommended hashtags |
-| coverPrompt | Suggested prompt for cover image |
-| strategy | Posting strategy recommendation |
-
----
-
-# Example use cases
-
-This skill is useful for:
-
-- Xiaohongshu content creators
-- Social media marketing teams
-- AI agent workflows
-- Automated content pipelines
-
-Example scenarios:
-
-- Generate daily Xiaohongshu posts automatically
-- Integrate with AI agents that schedule social media content
-- Brainstorm viral post ideas quickly
-
----
-
-# Runtime
-
-Entry point:
-
-```
-run.js
-```
-
-The main function receives the user input topic and orchestrates the following steps:
-
-1. Fetch trending keywords
-2. Generate viral content using LLM
-3. Rank hashtags
-4. Generate cover prompt
-5. Produce posting strategy
-
----
-
-# Pricing
-
-This skill uses SkillPay billing.
-
-Each execution costs:
-
-```
-0.05 USDT
-```
-
-Pricing id:
-
-```
-66d32381-4e78-4593-9309-63576e85a8b7
-```
+1. 获取趋势关键词
+2. 调用 GPT-4o 生成标题与正文
+3. 生成并排序标签
+4. 生成封面图提示词
+5. 生成发帖策略
+6. 调用 SkillPay 扣费

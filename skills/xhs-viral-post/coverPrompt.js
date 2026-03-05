@@ -1,14 +1,15 @@
 ﻿module.exports = async function generateCoverPrompt(topic, title, hashtags) {
-  const cleanTopic = String(topic || "").trim();
-  const cleanTitle = String(title || "").trim();
-  const tagText = (Array.isArray(hashtags) ? hashtags : []).slice(0, 3).join(" ");
+  const t = String(topic || "").trim() || "lifestyle";
+  const h = String(title || "").trim() || "xiaohongshu viral note";
+  const tags = (Array.isArray(hashtags) ? hashtags : []).slice(0, 3).join(" ");
 
   return [
-    "Xiaohongshu cover image, vertical 4:5 composition, high click-through design,",
-    `theme: ${cleanTopic || "lifestyle"},`,
-    `headline concept: ${cleanTitle || "viral xhs post"},`,
-    `include visual motifs from: ${tagText || "modern clean aesthetic"},`,
-    "bright natural lighting, clean background, stylish props, premium lifestyle photography,",
-    "editorial composition, ultra-detailed, realistic, no watermark, no text artifacts"
+    "Xiaohongshu cover, 4:5 vertical, clean bright style,",
+    `theme: ${t},`,
+    `headline mood: ${h},`,
+    `elements: ${tags || "cozy props, daily life details"},`,
+    "natural daylight, close-up product + lifestyle scene,",
+    "high contrast subject, minimal background clutter,",
+    "premium social media editorial photography, ultra-detailed, no watermark"
   ].join(" ");
 };
